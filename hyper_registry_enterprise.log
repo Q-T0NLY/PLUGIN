@@ -1,0 +1,105 @@
+🕒 2025-12-09 15:16:49,021 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 🏢 Integrated Registry initialized - System ID: 7f75f094-5324-4ac3-b057-22b9c1a6dc9a
+🕒 2025-12-09 15:17:01,704 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 🏢 Integrated Registry initialized - System ID: 9b2684f5-5f95-431d-95f1-f0e6b5be3a8a
+🕒 2025-12-09 15:17:01,704 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 🚀 Starting Integrated Hyper Registry System...
+🕒 2025-12-09 15:17:01,704 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 💾 Initializing database manager...
+🕒 2025-12-09 15:17:01,704 | 🏷️ hyper_registry.database | 📊 INFO | 📍 🏢 Enterprise Database Manager created - URL: postgresql://hyper:secure@localhost:5432/hyper_reg...
+🕒 2025-12-09 15:17:01,705 | 🏷️ hyper_registry.database | 📊 INFO | 📍 🏢 Starting Enterprise Database Manager...
+🕒 2025-12-09 15:17:02,106 | 🏷️ hyper_registry.database | 📊 INFO | 📍 ✅ Database engines initialized successfully
+🕒 2025-12-09 15:17:02,106 | 🏷️ hyper_registry.database | 📊 INFO | 📍 ✅ Database schema created
+🕒 2025-12-09 15:17:02,107 | 🏷️ hyper_registry.database | 📊 INFO | 📍 ✅ Enterprise Database Manager started successfully
+🕒 2025-12-09 15:17:02,107 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 ✅ Database manager initialized
+🕒 2025-12-09 15:17:02,107 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 📊 Initializing analytics engine...
+🕒 2025-12-09 15:17:02,107 | 🏷️ hyper_registry.analytics | 📊 INFO | 📍 📊 Analytics Engine initialized
+🕒 2025-12-09 15:17:02,108 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 ✅ Analytics engine initialized
+🕒 2025-12-09 15:17:02,108 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 📝 Initializing universal registry manager...
+🕒 2025-12-09 15:17:02,108 | 🏷️ hyper_registry.search | 📊 INFO | 📍 🔍 Universal Search Engine initialized
+🕒 2025-12-09 15:17:02,108 | 🏷️ hyper_registry.relationships | 📊 INFO | 📍 🕸️ Advanced Relationship Manager initialized
+🕒 2025-12-09 15:17:02,108 | 🏷️ hyper_registry.analytics | 📊 INFO | 📍 📊 Analytics Engine initialized
+🕒 2025-12-09 15:17:02,109 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 🧠 AI Inference Engine initialized
+🕒 2025-12-09 15:17:02,109 | 🏷️ hyper_registry.universal_registry | 📊 INFO | 📍 🏢 Universal Registry Manager initialized
+🕒 2025-12-09 15:17:02,109 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 ✅ Universal registry manager initialized
+🕒 2025-12-09 15:17:02,109 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 🌐 Initializing API gateway...
+🕒 2025-12-09 15:17:02,109 | 🏷️ hyper_registry.api_gateway | 📊 INFO | 📍 🌐 Registry API Gateway initialized
+🕒 2025-12-09 15:17:02,110 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 ✅ API gateway initialized
+🕒 2025-12-09 15:17:02,110 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 🟢 SYSTEM OPERATIONAL
+🕒 2025-12-09 15:17:02,110 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 📊 Status: 🟢 operational
+🕒 2025-12-09 15:17:02,111 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 🆔 System ID: 9b2684f5-5f95-431d-95f1-f0e6b5be3a8a
+🕒 2025-12-09 15:17:02,111 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 🏷️ Classified dca1805a-4972-4b4a-983d-64bb597fc4cf as agent (confidence: 99.00%)
+🕒 2025-12-09 15:17:02,112 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 📍 Generated embedding for dca1805a-4972-4b4a-983d-64bb597fc4cf (384 dimensions)
+🕒 2025-12-09 15:17:02,112 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 🏷️ Suggested 2 tags for dca1805a-4972-4b4a-983d-64bb597fc4cf
+🕒 2025-12-09 15:17:02,112 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 📝 Summarizing entry...
+🕒 2025-12-09 15:17:02,112 | 🏷️ hyper_registry.universal_registry | 📊 INFO | 📍 ✅ Entry registered: dca1805a-4972-4b4a-983d-64bb597fc4cf (agent)
+🕒 2025-12-09 15:17:02,113 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 🏷️ Classified dd09b7e7-c083-4332-8987-96b38a00fbcf as service (confidence: 99.00%)
+🕒 2025-12-09 15:17:02,113 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 📍 Generated embedding for dd09b7e7-c083-4332-8987-96b38a00fbcf (384 dimensions)
+🕒 2025-12-09 15:17:02,113 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 🏷️ Suggested 2 tags for dd09b7e7-c083-4332-8987-96b38a00fbcf
+🕒 2025-12-09 15:17:02,114 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 📝 Summarizing entry...
+🕒 2025-12-09 15:17:02,114 | 🏷️ hyper_registry.universal_registry | 📊 INFO | 📍 ✅ Entry registered: dd09b7e7-c083-4332-8987-96b38a00fbcf (service)
+🕒 2025-12-09 15:17:02,114 | 🏷️ hyper_registry.relationships | 📊 INFO | 📍 🔗 Edge added: dca1805a-4972-4b4a-983d-64bb597fc4cf --[uses_service]--> dd09b7e7-c083-4332-8987-96b38a00fbcf
+🕒 2025-12-09 15:17:02,114 | 🏷️ hyper_registry.universal_registry | 📊 INFO | 📍 🔗 Relationship created: dca1805a-4972-4b4a-983d-64bb597fc4cf --[uses_service]--> dd09b7e7-c083-4332-8987-96b38a00fbcf
+🕒 2025-12-09 15:17:52,825 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 🏢 Integrated Registry initialized - System ID: 2eb49c77-f735-42ec-8148-46cd7f030375
+🕒 2025-12-09 15:17:52,826 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 🚀 Starting Integrated Hyper Registry System...
+🕒 2025-12-09 15:17:52,826 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 💾 Initializing database manager...
+🕒 2025-12-09 15:17:52,826 | 🏷️ hyper_registry.database | 📊 INFO | 📍 🏢 Enterprise Database Manager created - URL: postgresql://hyper:secure@localhost:5432/hyper_reg...
+🕒 2025-12-09 15:17:52,826 | 🏷️ hyper_registry.database | 📊 INFO | 📍 🏢 Starting Enterprise Database Manager...
+🕒 2025-12-09 15:17:53,087 | 🏷️ hyper_registry.database | 📊 INFO | 📍 ✅ Database engines initialized successfully
+🕒 2025-12-09 15:17:53,087 | 🏷️ hyper_registry.database | 📊 INFO | 📍 ✅ Database schema created
+🕒 2025-12-09 15:17:53,087 | 🏷️ hyper_registry.database | 📊 INFO | 📍 ✅ Enterprise Database Manager started successfully
+🕒 2025-12-09 15:17:53,087 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 ✅ Database manager initialized
+🕒 2025-12-09 15:17:53,087 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 📊 Initializing analytics engine...
+🕒 2025-12-09 15:17:53,087 | 🏷️ hyper_registry.analytics | 📊 INFO | 📍 📊 Analytics Engine initialized
+🕒 2025-12-09 15:17:53,087 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 ✅ Analytics engine initialized
+🕒 2025-12-09 15:17:53,088 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 📝 Initializing universal registry manager...
+🕒 2025-12-09 15:17:53,088 | 🏷️ hyper_registry.search | 📊 INFO | 📍 🔍 Universal Search Engine initialized
+🕒 2025-12-09 15:17:53,088 | 🏷️ hyper_registry.relationships | 📊 INFO | 📍 🕸️ Advanced Relationship Manager initialized
+🕒 2025-12-09 15:17:53,088 | 🏷️ hyper_registry.analytics | 📊 INFO | 📍 📊 Analytics Engine initialized
+🕒 2025-12-09 15:17:53,088 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 🧠 AI Inference Engine initialized
+🕒 2025-12-09 15:17:53,088 | 🏷️ hyper_registry.universal_registry | 📊 INFO | 📍 🏢 Universal Registry Manager initialized
+🕒 2025-12-09 15:17:53,088 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 ✅ Universal registry manager initialized
+🕒 2025-12-09 15:17:53,088 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 🌐 Initializing API gateway...
+🕒 2025-12-09 15:17:53,089 | 🏷️ hyper_registry.api_gateway | 📊 INFO | 📍 🌐 Registry API Gateway initialized
+🕒 2025-12-09 15:17:53,089 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 ✅ API gateway initialized
+🕒 2025-12-09 15:17:53,089 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 🟢 SYSTEM OPERATIONAL
+🕒 2025-12-09 15:17:53,089 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 📊 Status: 🟢 operational
+🕒 2025-12-09 15:17:53,089 | 🏷️ hyper_registry.integrated | 📊 INFO | 📍 🆔 System ID: 2eb49c77-f735-42ec-8148-46cd7f030375
+🕒 2025-12-09 15:17:53,089 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 🏷️ Classified c9d2bf11-9ec0-4d2c-8447-9ac47cb7a25c as agent (confidence: 99.00%)
+🕒 2025-12-09 15:17:53,090 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 📍 Generated embedding for c9d2bf11-9ec0-4d2c-8447-9ac47cb7a25c (384 dimensions)
+🕒 2025-12-09 15:17:53,090 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 🏷️ Suggested 3 tags for c9d2bf11-9ec0-4d2c-8447-9ac47cb7a25c
+🕒 2025-12-09 15:17:53,090 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 📝 Summarizing entry...
+🕒 2025-12-09 15:17:53,090 | 🏷️ hyper_registry.universal_registry | 📊 INFO | 📍 ✅ Entry registered: c9d2bf11-9ec0-4d2c-8447-9ac47cb7a25c (agent)
+🕒 2025-12-09 15:17:53,090 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 🏷️ Classified f3e288a0-a56c-4eca-bea1-4bcb06c5a59b as agent (confidence: 99.00%)
+🕒 2025-12-09 15:17:53,091 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 📍 Generated embedding for f3e288a0-a56c-4eca-bea1-4bcb06c5a59b (384 dimensions)
+🕒 2025-12-09 15:17:53,091 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 🏷️ Suggested 4 tags for f3e288a0-a56c-4eca-bea1-4bcb06c5a59b
+🕒 2025-12-09 15:17:53,091 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 📝 Summarizing entry...
+🕒 2025-12-09 15:17:53,091 | 🏷️ hyper_registry.universal_registry | 📊 INFO | 📍 ✅ Entry registered: f3e288a0-a56c-4eca-bea1-4bcb06c5a59b (agent)
+🕒 2025-12-09 15:17:53,091 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 🏷️ Classified 3fd09e5d-8664-4d56-bb48-c4589360b8b0 as service (confidence: 50.00%)
+🕒 2025-12-09 15:17:53,091 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 📍 Generated embedding for 3fd09e5d-8664-4d56-bb48-c4589360b8b0 (384 dimensions)
+🕒 2025-12-09 15:17:53,091 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 🏷️ Suggested 4 tags for 3fd09e5d-8664-4d56-bb48-c4589360b8b0
+🕒 2025-12-09 15:17:53,092 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 📝 Summarizing entry...
+🕒 2025-12-09 15:17:53,092 | 🏷️ hyper_registry.universal_registry | 📊 INFO | 📍 ✅ Entry registered: 3fd09e5d-8664-4d56-bb48-c4589360b8b0 (service)
+🕒 2025-12-09 15:17:53,092 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 🏷️ Classified af5a72bc-af49-48ef-afa8-d5eb5cc14ef2 as agent (confidence: 0.00%)
+🕒 2025-12-09 15:17:53,092 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 📍 Generated embedding for af5a72bc-af49-48ef-afa8-d5eb5cc14ef2 (384 dimensions)
+🕒 2025-12-09 15:17:53,092 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 🏷️ Suggested 5 tags for af5a72bc-af49-48ef-afa8-d5eb5cc14ef2
+🕒 2025-12-09 15:17:53,092 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 📝 Summarizing entry...
+🕒 2025-12-09 15:17:53,093 | 🏷️ hyper_registry.universal_registry | 📊 INFO | 📍 ✅ Entry registered: af5a72bc-af49-48ef-afa8-d5eb5cc14ef2 (service)
+🕒 2025-12-09 15:17:53,093 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 🏷️ Classified d5a711a3-20c7-439e-830c-fc3dcfdb9c7e as model (confidence: 99.00%)
+🕒 2025-12-09 15:17:53,093 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 📍 Generated embedding for d5a711a3-20c7-439e-830c-fc3dcfdb9c7e (384 dimensions)
+🕒 2025-12-09 15:17:53,093 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 🏷️ Suggested 3 tags for d5a711a3-20c7-439e-830c-fc3dcfdb9c7e
+🕒 2025-12-09 15:17:53,093 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 📝 Summarizing entry...
+🕒 2025-12-09 15:17:53,093 | 🏷️ hyper_registry.universal_registry | 📊 INFO | 📍 ✅ Entry registered: d5a711a3-20c7-439e-830c-fc3dcfdb9c7e (model)
+🕒 2025-12-09 15:17:53,094 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 🏷️ Classified 6b6c5965-e9db-4297-8183-51a17a27c93e as model (confidence: 99.00%)
+🕒 2025-12-09 15:17:53,094 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 📍 Generated embedding for 6b6c5965-e9db-4297-8183-51a17a27c93e (384 dimensions)
+🕒 2025-12-09 15:17:53,094 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 🏷️ Suggested 3 tags for 6b6c5965-e9db-4297-8183-51a17a27c93e
+🕒 2025-12-09 15:17:53,094 | 🏷️ hyper_registry.ai_engine | 📊 INFO | 📍 📝 Summarizing entry...
+🕒 2025-12-09 15:17:53,094 | 🏷️ hyper_registry.universal_registry | 📊 INFO | 📍 ✅ Entry registered: 6b6c5965-e9db-4297-8183-51a17a27c93e (model)
+🕒 2025-12-09 15:17:53,094 | 🏷️ hyper_registry.relationships | 📊 INFO | 📍 🔗 Edge added: c9d2bf11-9ec0-4d2c-8447-9ac47cb7a25c --[uses_service]--> 3fd09e5d-8664-4d56-bb48-c4589360b8b0
+🕒 2025-12-09 15:17:53,094 | 🏷️ hyper_registry.universal_registry | 📊 INFO | 📍 🔗 Relationship created: c9d2bf11-9ec0-4d2c-8447-9ac47cb7a25c --[uses_service]--> 3fd09e5d-8664-4d56-bb48-c4589360b8b0
+🕒 2025-12-09 15:17:53,095 | 🏷️ hyper_registry.relationships | 📊 INFO | 📍 🔗 Edge added: c9d2bf11-9ec0-4d2c-8447-9ac47cb7a25c --[uses_service]--> af5a72bc-af49-48ef-afa8-d5eb5cc14ef2
+🕒 2025-12-09 15:17:53,095 | 🏷️ hyper_registry.universal_registry | 📊 INFO | 📍 🔗 Relationship created: c9d2bf11-9ec0-4d2c-8447-9ac47cb7a25c --[uses_service]--> af5a72bc-af49-48ef-afa8-d5eb5cc14ef2
+🕒 2025-12-09 15:17:53,095 | 🏷️ hyper_registry.relationships | 📊 INFO | 📍 🔗 Edge added: 3fd09e5d-8664-4d56-bb48-c4589360b8b0 --[supports_model]--> d5a711a3-20c7-439e-830c-fc3dcfdb9c7e
+🕒 2025-12-09 15:17:53,095 | 🏷️ hyper_registry.universal_registry | 📊 INFO | 📍 🔗 Relationship created: 3fd09e5d-8664-4d56-bb48-c4589360b8b0 --[supports_model]--> d5a711a3-20c7-439e-830c-fc3dcfdb9c7e
+🕒 2025-12-09 15:17:53,095 | 🏷️ hyper_registry.relationships | 📊 INFO | 📍 🔗 Edge added: 3fd09e5d-8664-4d56-bb48-c4589360b8b0 --[supports_model]--> 6b6c5965-e9db-4297-8183-51a17a27c93e
+🕒 2025-12-09 15:17:53,095 | 🏷️ hyper_registry.universal_registry | 📊 INFO | 📍 🔗 Relationship created: 3fd09e5d-8664-4d56-bb48-c4589360b8b0 --[supports_model]--> 6b6c5965-e9db-4297-8183-51a17a27c93e
+🕒 2025-12-09 15:17:53,095 | 🏷️ hyper_registry.search | 📊 INFO | 📍 🎯 Hybrid search: '*' with weights {'vector': 0.5, 'text': 0.3, 'filters': 0.2}
+🕒 2025-12-09 15:17:53,096 | 🏷️ hyper_registry.search | 📊 INFO | 📍 📝 Full-text search: '*' in all fields
+🕒 2025-12-09 15:17:53,096 | 🏷️ hyper_registry.search | 📊 INFO | 📍 🎯 Hybrid search: '*' with weights {'vector': 0.5, 'text': 0.3, 'filters': 0.2}
+🕒 2025-12-09 15:17:53,096 | 🏷️ hyper_registry.search | 📊 INFO | 📍 📝 Full-text search: '*' in all fields

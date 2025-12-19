@@ -1,0 +1,129 @@
+version: '3.8'
+
+services:
+  # PostgreSQL with pgvector for vector storage
+  postgres:
+    image: pgvector/pgvector:pg16-latest
+    container_name: nexus_postgres
+    environment:
+      POSTGRES_DB: nexus
+      POSTGRES_USER: nexus_user
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-nexus_secure_password}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexus_user -d nexus"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - nexus_network
+
+  # Redis for caching and pub/sub
+  redis:
+    image: redis:7-alpine
+    container_name: nexus_redis
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - nexus_network
+
+  # HOP Discovery Orchestrator (main service)
+  hop_orchestrator:
+    build:
+      context: .
+      dockerfile: services/discovery/Dockerfile
+    container_name: nexus_hop_orchestrator
+    environment:
+      DATABASE_URL: postgresql://nexus_user:${POSTGRES_PASSWORD:-nexus_secure_password}@postgres:5432/nexus
+      REDIS_URL: redis://redis:6379
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      HOP_DISCOVERY_INTERVAL: ${HOP_DISCOVERY_INTERVAL:-60}
+    ports:
+      - "8001:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./services:/app/services
+      - ./logs:/app/logs
+    networks:
+      - nexus_network
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # API Gateway (includes discovery + multimodal endpoints)
+  api_gateway:
+    build:
+      context: .
+      dockerfile: services/api_gateway/Dockerfile
+    container_name: nexus_api_gateway
+    environment:
+      DATABASE_URL: postgresql://nexus_user:${POSTGRES_PASSWORD:-nexus_secure_password}@postgres:5432/nexus
+      REDIS_URL: redis://redis:6379
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./services:/app/services
+      - ./logs:/app/logs
+    networks:
+      - nexus_network
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Dashboard frontend
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.dashboard
+    container_name: nexus_dashboard
+    environment:
+      API_GATEWAY_URL: http://api_gateway:8000
+    ports:
+      - "5000:5000"
+    depends_on:
+      - api_gateway
+    volumes:
+      - ./:/app
+    networks:
+      - nexus_network
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  nexus_network:
+    driver: bridge

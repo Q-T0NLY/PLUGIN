@@ -1,28 +1,21 @@
 """
-🏢 HYPER REGISTRY CORE MODULES
-Complete enterprise registry system with all core components
+Agents Sub-Registry for the Universal Hyper Registry.
+Provides registration, discovery, and lifecycle management for advanced agents
+and tools (VectorStore, Web Search, Neo4j KG, Git/Repo, Crawling/Parsing,
+DAG/RAG++, GraphRAG, Ensemble Fusion, Multimodal, Screen Capture, VLA/Playwright, XAI).
 """
 
-from .database import EnterpriseDatabaseManager
-from .search_engine import UniversalSearchEngine, SearchResult
-from .relationships import AdvancedRelationshipManager, GraphNode, GraphEdge, GraphPath
-from .analytics import AnalyticsEngine, Metric, PerformanceStats
-from .ai_engine import AIInferenceEngine, Classification, Embedding
+AGENTS_REGISTRY = {}
+TOOLS_REGISTRY = {}
 
-__all__ = [
-    "EnterpriseDatabaseManager",
-    "UniversalSearchEngine",
-    "SearchResult",
-    "AdvancedRelationshipManager",
-    "GraphNode",
-    "GraphEdge",
-    "GraphPath",
-    "AnalyticsEngine",
-    "Metric",
-    "PerformanceStats",
-    "AIInferenceEngine",
-    "Classification",
-    "Embedding",
-]
+def register_agent(name: str, agent_cls):
+    AGENTS_REGISTRY[name] = agent_cls
 
-__version__ = "1.0.0"
+def register_tool(name: str, tool_cls):
+    TOOLS_REGISTRY[name] = tool_cls
+
+def list_agents():
+    return sorted(AGENTS_REGISTRY.keys())
+
+def list_tools():
+    return sorted(TOOLS_REGISTRY.keys())
