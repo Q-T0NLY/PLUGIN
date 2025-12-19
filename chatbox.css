@@ -1,0 +1,662 @@
+/* ==================== 🎨 CHATBOX GLOBAL STYLES ==================== */
+
+:root {
+  /* Colors */
+  --color-primary: #FF00FF;
+  --color-secondary: #00FFFF;
+  --color-accent: #FFFF00;
+  --color-background: #0A0A0A;
+  --color-surface: #1A1A2E;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #B0B0B0;
+  --color-border: #FF00FF;
+  
+  /* User & Assistant Colors */
+  --color-user-bubble: #FF00FF;
+  --color-assistant-bubble: #00FFFF;
+  --color-system-bubble: #FFD700;
+  --color-success: #00FF00;
+  --color-warning: #FFA500;
+  --color-error: #FF0000;
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
+  --spacing-2xl: 24px;
+  
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 0 20px rgba(255, 0, 255, 0.5);
+  --shadow-xl: 0 0 30px rgba(255, 0, 255, 0.7);
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease-out;
+  --transition-normal: 0.3s ease-out;
+  --transition-slow: 0.5s ease-out;
+  
+  /* Fonts */
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 20px;
+  
+  /* Z-Index */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal: 400;
+  --z-tooltip: 500;
+  /* Ensemble / Gauge colors */
+  --gauge-primary: #00B4D8;
+  --gauge-accent: #00FF41;
+  --gauge-bg: #111217;
+  --gauge-track: rgba(255,255,255,0.04);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+}
+
+/* ==================== 📦 CHATBOX CONTAINER ==================== */
+
+.chatbox-container {
+  display: flex;
+  height: 100vh;
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-family);
+  overflow: hidden;
+}
+
+.chatbox-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-background);
+  position: relative;
+}
+
+/* ==================== 🎯 HEADER STYLES ==================== */
+
+.chatbox-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-lg) var(--spacing-xl);
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    var(--color-secondary)
+  );
+  border-bottom: 2px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-sticky);
+}
+
+.chatbox-header-info h2 {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.chatbox-header-info p {
+  margin: var(--spacing-xs) 0 0 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  opacity: 0.8;
+}
+
+.chatbox-header-actions {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.chatbox-header-actions button {
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-xl);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
+  
+  &:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+/* ==================== 💬 MESSAGES CONTAINER ==================== */
+
+.chatbox-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-xl);
+  background: var(--color-background);
+  scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.chatbox-messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chatbox-messages::-webkit-scrollbar-track {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+
+.chatbox-messages::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: var(--radius-md);
+  transition: background var(--transition-normal);
+}
+
+.chatbox-messages::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary);
+}
+
+/* ==================== 💬 MESSAGE STYLES ==================== */
+
+.message-row {
+  display: flex;
+  margin: var(--spacing-md) 0;
+  animation: fadeInScale var(--transition-normal);
+}
+
+.message-row.user {
+  justify-content: flex-end;
+}
+
+.message-row.assistant {
+  justify-content: flex-start;
+}
+
+.message-row.system {
+  justify-content: center;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  word-wrap: break-word;
+  backdrop-filter: blur(10px);
+  transition: all var(--transition-normal);
+}
+
+.message-bubble.user {
+  background: var(--color-user-bubble);
+  background: color-mix(in srgb, var(--color-user-bubble) 15%, transparent);
+  border: 2px solid var(--color-user-bubble);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color-user-bubble) 40%, transparent);
+}
+
+.message-bubble.assistant {
+  background: color-mix(in srgb, var(--color-assistant-bubble) 15%, transparent);
+  border: 2px solid var(--color-assistant-bubble);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color-assistant-bubble) 40%, transparent);
+}
+
+.message-bubble.system {
+  background: color-mix(in srgb, var(--color-system-bubble) 15%, transparent);
+  border: 2px solid var(--color-system-bubble);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color-system-bubble) 40%, transparent);
+}
+
+.message-bubble:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--color-primary) 60%, transparent);
+}
+
+.message-content {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  line-height: 1.6;
+}
+
+.message-meta {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid currentColor;
+  opacity: 0.7;
+}
+
+.message-status {
+  display: inline-block;
+}
+
+.message-status.sent::after {
+  content: '✓';
+}
+
+.message-status.delivered::after {
+  content: '✓✓';
+}
+
+.message-status.pending::after {
+  content: '⏳';
+}
+
+/* ==================== 🧠 THINKING BUBBLE ==================== */
+
+.thinking-bubble {
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin: var(--spacing-md) 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-style: italic;
+  animation: expandIn var(--transition-slow);
+}
+
+@keyframes expandIn {
+  from {
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+.thinking-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  font-weight: 500;
+  color: var(--color-accent);
+}
+
+.thinking-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ==================== ⌨️ INPUT CONTAINER ==================== */
+
+.chatbox-input-container {
+  display: flex;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  background: var(--color-surface);
+  border-top: 1px solid color-mix(in srgb, var(--color-border) 40%, transparent);
+  z-index: var(--z-sticky);
+}
+
+.chatbox-input {
+  flex: 1;
+  background: var(--color-background);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  font-family: inherit;
+  transition: all var(--transition-normal);
+  resize: none;
+  max-height: 100px;
+}
+
+.chatbox-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color-primary) 40%, transparent);
+}
+
+.chatbox-input::placeholder {
+  color: color-mix(in srgb, var(--color-text-secondary) 60%, transparent);
+}
+
+/* ==================== 🎛️ ACTION BUTTONS ==================== */
+
+.chatbox-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.action-button {
+  background: color-mix(in srgb, var(--color-primary) 20%, transparent);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  color: var(--color-primary);
+  font-size: var(--font-size-xl);
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.action-button:hover {
+  background: color-mix(in srgb, var(--color-primary) 40%, transparent);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color-primary) 60%, transparent);
+  transform: scale(1.05);
+}
+
+.action-button:active {
+  transform: scale(0.95);
+}
+
+.send-button {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-secondary)
+  );
+  border: none;
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-lg);
+}
+
+.send-button:hover {
+  box-shadow: var(--shadow-xl);
+}
+
+/* ==================== ⏳ TYPING INDICATOR ==================== */
+
+.typing-indicator {
+  display: flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.typing-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  animation: typing 1.4s infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing {
+  0%, 60%, 100% {
+    opacity: 0.3;
+  }
+  30% {
+    opacity: 1;
+  }
+}
+
+/* ==================== 📱 RESPONSIVE DESIGN ==================== */
+
+@media (max-width: 768px) {
+  .message-bubble {
+    max-width: 85%;
+  }
+  
+  .chatbox-header {
+    padding: var(--spacing-md) var(--spacing-lg);
+  }
+  
+  .chatbox-header-info h2 {
+    font-size: var(--font-size-lg);
+  }
+  
+  .chatbox-input-container {
+    flex-wrap: wrap;
+  }
+  
+  .action-button {
+    width: 36px;
+    height: 36px;
+    font-size: var(--font-size-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .chatbox-container {
+    height: 100vh;
+  }
+  
+  .message-bubble {
+    max-width: 95%;
+  }
+  
+  .chatbox-messages {
+    padding: var(--spacing-md);
+  }
+  
+  .chatbox-header {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    align-items: flex-start;
+  }
+  
+  .chatbox-header-actions {
+    align-self: flex-end;
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .chatbox-input-container {
+    gap: var(--spacing-xs);
+  }
+  
+  .chatbox-input {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}
+
+/* ==================== 🌙 DARK MODE (Optional) ==================== */
+
+@media (prefers-color-scheme: dark) {
+  .message-bubble {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  }
+  
+  .chatbox-input {
+    background: color-mix(in srgb, var(--color-surface) 50%, transparent);
+  }
+}
+
+/* ==================== ♿ ACCESSIBILITY ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus visible for keyboard navigation */
+.action-button:focus-visible,
+.chatbox-input:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+  .message-bubble {
+    border-width: 3px;
+  }
+  
+  .action-button {
+    border-width: 3px;
+  }
+}
+
+/* ==================== 🎬 ADVANCED ANIMATIONS ==================== */
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px currentColor;
+  }
+  50% {
+    box-shadow: 0 0 20px currentColor;
+  }
+}
+
+.message-bubble.user {
+  animation: slideIn var(--transition-normal);
+}
+
+.message-bubble.assistant {
+  animation: slideUp var(--transition-normal);
+}
+
+/* ==================== 🎨 THEME UTILITIES ==================== */
+
+.text-primary {
+  color: var(--color-text-primary);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.bg-primary {
+  background: color-mix(in srgb, var(--color-primary) 20%, transparent);
+}
+
+.bg-secondary {
+  background: color-mix(in srgb, var(--color-secondary) 20%, transparent);
+}
+
+.border-primary {
+  border-color: var(--color-primary);
+}
+
+.border-secondary {
+  border-color: var(--color-secondary);
+}
+
+/* ==================== 📊 UTILITY CLASSES ==================== */
+
+.hidden {
+  display: none !important;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.opacity-75 {
+  opacity: 0.75;
+}
+
+.shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+.rounded-lg {
+  border-radius: var(--radius-lg);
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

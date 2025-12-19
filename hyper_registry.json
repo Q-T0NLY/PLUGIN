@@ -1,0 +1,196 @@
+{
+  "version": "2.0.0",
+  "name": "NEXUS Hyper Registry",
+  "description": "Master registry orchestrating all sub-registries (tools, providers, models, plugins, microservices, ml_frameworks)",
+  "registry_type": "hyper",
+  "timestamp": "2025-01-17T00:00:00Z",
+  "metadata": {
+    "maintainer": "NEXUS Team",
+    "environment": "production",
+    "sync_interval_seconds": 60,
+    "cache_ttl_seconds": 300
+  },
+  "sub_registries": {
+    "tools": {
+      "path": "./tool_registry.json",
+      "version": "1.0.0",
+      "description": "System tools and capabilities matrix",
+      "sync_enabled": true,
+      "entries_count_expected": 15,
+      "categories": [
+        "container",
+        "orchestration",
+        "compute",
+        "ml_framework",
+        "vcs",
+        "runtime",
+        "cloud",
+        "iac"
+      ]
+    },
+    "providers": {
+      "path": "./provider_registry.json",
+      "version": "1.0.0",
+      "description": "LLM provider endpoints, models, and capabilities",
+      "sync_enabled": true,
+      "entries_count_expected": 6,
+      "categories": [
+        "cloud_api",
+        "local_inference",
+        "proprietary",
+        "open_source"
+      ]
+    },
+    "models": {
+      "path": "./model_registry.json",
+      "version": "1.0.0",
+      "description": "Available models with metadata and performance profiles",
+      "sync_enabled": true,
+      "entries_count_expected": 25,
+      "capabilities": [
+        "streaming",
+        "vision",
+        "audio",
+        "function_calling",
+        "reasoning",
+        "code_generation"
+      ]
+    },
+    "plugins": {
+      "path": "./plugin_registry.json",
+      "version": "1.0.0",
+      "description": "Zsh plugins and module loaders",
+      "sync_enabled": true,
+      "entries_count_expected": 8,
+      "types": [
+        "dashboard",
+        "api_manager",
+        "monitoring",
+        "tool_detection",
+        "webhook_sender",
+        "security"
+      ]
+    },
+    "microservices": {
+      "path": "./microservice_registry.json",
+      "version": "1.0.0",
+      "description": "Running services and their endpoints",
+      "sync_enabled": true,
+      "entries_count_expected": 5,
+      "types": [
+        "orchestrator",
+        "api_gateway",
+        "database",
+        "cache",
+        "messaging"
+      ]
+    },
+    "adapters": {
+      "path": "./adapter_registry.json",
+      "version": "1.0.0",
+      "description": "Provider adapters and universal interface",
+      "sync_enabled": true,
+      "entries_count_expected": 8,
+      "types": [
+        "provider_adapter",
+        "universal_adapter",
+        "protocol_adapter",
+        "auth_adapter"
+      ]
+    },
+    "ml_frameworks": {
+      "path": "./ml_framework_registry.json",
+      "version": "1.0.0",
+      "description": "ML frameworks, libraries, and dependencies",
+      "sync_enabled": true,
+      "entries_count_expected": 10,
+      "categories": [
+        "deep_learning",
+        "nlp",
+        "computer_vision",
+        "inference",
+        "utilities"
+      ]
+    }
+  },
+  "dependency_graph": {
+    "description": "Service and component dependencies",
+    "edges": [
+      {
+        "from": "nexus_hyper_core",
+        "to": "api_manager",
+        "type": "requires",
+        "description": "Router requires API key manager"
+      },
+      {
+        "from": "api_manager",
+        "to": "tool_registry",
+        "type": "references",
+        "description": "Tool detection populates tool registry"
+      },
+      {
+        "from": "nexus_llm_router",
+        "to": "universal_adapter",
+        "type": "calls",
+        "description": "Router calls universal adapter for provider selection"
+      },
+      {
+        "from": "universal_adapter",
+        "to": "provider_registry",
+        "type": "queries",
+        "description": "Adapter queries provider registry for capabilities"
+      },
+      {
+        "from": "multi_llm_service",
+        "to": "model_registry",
+        "type": "references",
+        "description": "Orchestrator queries model registry"
+      },
+      {
+        "from": "nexus_dashboard",
+        "to": "dashboard_registry",
+        "type": "reads",
+        "description": "Dashboard renders components from dashboard registry"
+      },
+      {
+        "from": "hyper_registry",
+        "to": "all_sub_registries",
+        "type": "orchestrates",
+        "description": "Master registry coordinates all sub-registries"
+      }
+    ]
+  },
+  "sync_protocol": {
+    "type": "polling",
+    "interval_seconds": 60,
+    "retry_attempts": 3,
+    "timeout_seconds": 30,
+    "endpoints": [
+      "/health/registry/tools",
+      "/health/registry/providers",
+      "/health/registry/models",
+      "/health/registry/microservices"
+    ]
+  },
+  "version_compatibility": {
+    "nexus_hyper_core": ">=1.0.0",
+    "multi_llm_service": ">=1.0.0",
+    "universal_adapter": ">=1.0.0",
+    "api_manager": ">=1.0.0",
+    "dashboard": ">=1.0.0"
+  },
+  "export_formats": {
+    "json": true,
+    "yaml": true,
+    "protobuf": false,
+    "avro": false
+  },
+  "access_control": {
+    "dashboard_registry": "public_read",
+    "provider_registry": "public_read",
+    "tool_registry": "public_read",
+    "model_registry": "public_read",
+    "hyper_registry": "admin_only",
+    "microservice_registry": "authenticated"
+  }
+}

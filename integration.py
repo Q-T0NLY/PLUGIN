@@ -1,365 +1,308 @@
-"""
-[🔗] INTEGRATION BRIDGE - ChatBox ↔ CodeGen ↔ Ultimate Copilot System
-[🌉] Unified Multi-Agent AI System with 849+ Features
+#!/usr/bin/env python3
+# ============================================================================
+# 🔌 NEXUS SYSTEM INTEGRATION - Main Application Setup
+# ============================================================================
+# Integration module for binding all AI Matrix components into FastAPI app
+# ============================================================================
 
-Connects:
-[💬] Unified Chat Interface
-[⚙️] CodeGen Engine
-[🤖] Ultimate Copilot (849+ Features)
-[📊] Hyper Registry
-[🎨] Visual Systems with Emojis & Animations
-"""
-
-__version__ = "1.0.0"
-__name__ = "[🔗] Integration Bridge"
-
-import asyncio
 import logging
-from typing import Dict, List, Optional, Any, AsyncGenerator
-from datetime import datetime
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
+import asyncio
+from typing import Optional
 
-logger = logging.getLogger("hyper_registry.chatbox.integration")
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
+# ============================================================================
+# COMPONENT IMPORTS
+# ============================================================================
 
-class ChatBoxCodeGenBridge:
-    """
-    [🔗] INTEGRATION BRIDGE
-    Seamlessly connects ChatBox ↔ CodeGen ↔ Ultimate Copilot
+try:
+    from services.api_gateway.ai_endpoints import router as ai_router, initialize_ai_routes
+    from services.hyper_registry.registry_manager import get_registry_manager
+    logger.info("✅ AI Matrix components imported successfully")
+except ImportError as e:
+    logger.warning(f"⚠️  Some AI components could not be imported: {e}")
+    ai_router = None
+    get_registry_manager = None
+    # Attempt to import XAI router as an optional component
+    try:
+        from services.xai_api import xai_router
+        logger.info("✅ XAI router imported successfully")
+    except Exception:
+        xai_router = None
+
+# ============================================================================
+# LIFECYCLE MANAGEMENT
+# ============================================================================
+
+registry_manager_instance: Optional[object] = None
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """FastAPI lifespan context manager for startup/shutdown"""
     
-    Features:
-    [💬] Natural language to code intent mapping
-    [⚙️] Multi-step code generation with visualization
-    [🎯] Intent-driven task routing
-    [🧠] Context preservation across systems
-    [✨] Real-time streaming with emojis
-    [📊] Unified analytics & monitoring
-    """
+    # STARTUP
+    logger.info("🚀 NEXUS System Starting...")
     
-    def __init__(self, chat_interface, codegen_engine, registry):
-        """Initialize Integration Bridge"""
-        self.chat = chat_interface
-        self.codegen = codegen_engine
-        self.registry = registry
-        self.session_contexts = {}
-        
-        logger.info("[🔗] Integration Bridge Initialized")
+    try:
+        # Initialize Registry System
+        global registry_manager_instance
+        registry_manager_instance = get_registry_manager()
+        await registry_manager_instance.initialize()
+        logger.info("✅ Registry system initialized")
+    except Exception as e:
+        logger.error(f"❌ Registry initialization failed: {e}")
     
-    async def initialize(self):
-        """[🚀] Initialize bridge connections"""
-        logger.info("[🚀] Initializing Integration Bridge...")
-        
-        # Ensure all systems are initialized
-        if hasattr(self.chat, 'initialize'):
-            await self.chat.initialize()
-        
-        if hasattr(self.codegen, 'initialize'):
-            await self.codegen.initialize()
-        
-        logger.info("[✅] Integration Bridge Ready - All systems connected")
+    logger.info("🎯 NEXUS System fully operational")
     
-    async def process_chat_with_codegen(self, session_id: str, user_message: str,
-                                       enable_code_gen: bool = True,
-                                       file_context: Optional[Dict] = None,
-                                       code_context: Optional[Dict] = None) -> AsyncGenerator[Dict, None]:
-        """
-        [🎯] Process Chat Message with Optional Code Generation
-        
-        Flow:
-        [1️⃣] Chat intent detection
-        [2️⃣] Route to CodeGen if code generation detected
-        [3️⃣] Generate code with full analysis
-        [4️⃣] Stream results back to chat
-        [5️⃣] Preserve context for future messages
-        """
-        
-        try:
-            # [1️⃣] Initial chat processing
-            async for chat_event in self.chat.process_message(
-                session_id, user_message, file_context, code_context
-            ):
-                yield chat_event
-                
-                # [2️⃣] Check if code generation needed
-                if enable_code_gen and chat_event.get("type") == "intent_detected":
-                    intent = chat_event.get("intent", "")
-                    
-                    if self._should_generate_code(intent, user_message):
-                        yield {
-                            "type": "codegen_triggered",
-                            "emoji": "[⚙️]",
-                            "message": "Generating optimized code...",
-                            "timestamp": datetime.utcnow().isoformat()
-                        }
-                        
-                        # [3️⃣] Generate code
-                        async for codegen_event in self._generate_code_for_chat(
-                            user_message, file_context, code_context
-                        ):
-                            yield codegen_event
-        
-        except Exception as e:
-            logger.error(f"[❌] Bridge processing failed: {e}")
-            yield {
-                "type": "error",
-                "error": str(e),
-                "emoji": "[❌]",
-                "timestamp": datetime.utcnow().isoformat()
-            }
+    yield  # Application runs here
     
-    async def _generate_code_for_chat(self, prompt: str, file_context: Dict,
-                                     code_context: Dict) -> AsyncGenerator[Dict, None]:
-        """[⚙️] Generate code within chat context"""
-        
-        from .codegen import CodeGenerationRequest, CodeLanguage, CodeType, QualityLevel
-        
-        # Determine language and type from context
-        language = self._detect_language(file_context, code_context)
-        code_type = self._detect_code_type(prompt)
-        
-        request = CodeGenerationRequest(
-            prompt=prompt,
-            language=language,
-            code_type=code_type,
-            quality_level=QualityLevel.ENTERPRISE,
-            context=code_context or {},
-            style_guide=file_context.get("style_guide", {}) if file_context else {}
-        )
-        
-        # Stream code generation
-        async for event in self.codegen.generate_code(request):
-            yield event
+    # SHUTDOWN
+    logger.info("🛑 NEXUS System Shutting Down...")
     
-    def _should_generate_code(self, intent: str, message: str) -> bool:
-        """[🎯] Determine if code generation should be triggered"""
-        code_keywords = [
-            "code", "function", "class", "generate", "create", "write",
-            "async", "implement", "build", "refactor", "test", "debug",
-            "optimize", "fix", "script", "module", "component"
-        ]
-        
-        return any(keyword in intent.lower() or keyword in message.lower() 
-                  for keyword in code_keywords)
+    try:
+        if registry_manager_instance:
+            await registry_manager_instance.shutdown()
+        logger.info("✅ Graceful shutdown complete")
+    except Exception as e:
+        logger.error(f"❌ Shutdown error: {e}")
+
+# ============================================================================
+# FASTAPI APPLICATION FACTORY
+# ============================================================================
+
+def create_app() -> FastAPI:
+    """Create and configure FastAPI application"""
     
-    def _detect_language(self, file_context: Dict, code_context: Dict) -> Any:
-        """[🔤] Detect programming language"""
-        from .codegen import CodeLanguage
-        
-        if code_context and "language" in code_context:
-            lang_str = code_context["language"].lower()
-            
-            language_map = {
-                "python": CodeLanguage.PYTHON,
-                "javascript": CodeLanguage.JAVASCRIPT,
-                "typescript": CodeLanguage.TYPESCRIPT,
-                "java": CodeLanguage.JAVA,
-                "csharp": CodeLanguage.CSHARP,
-                "go": CodeLanguage.GOLANG,
-                "rust": CodeLanguage.RUST,
-                "cpp": CodeLanguage.CPP,
-                "sql": CodeLanguage.SQL,
-                "bash": CodeLanguage.BASH,
-            }
-            
-            return language_map.get(lang_str, CodeLanguage.PYTHON)
-        
-        return CodeLanguage.PYTHON
+    app = FastAPI(
+        title="NEXUS AI Intelligence Matrix v8.0",
+        description="Enterprise-grade multi-provider LLM orchestration platform",
+        version="8.0.0",
+        lifespan=lifespan
+    )
     
-    def _detect_code_type(self, prompt: str) -> Any:
-        """[📝] Detect type of code to generate"""
-        from .codegen import CodeType
-        
-        prompt_lower = prompt.lower()
-        
-        if "function" in prompt_lower or "def " in prompt_lower:
-            return CodeType.FUNCTION
-        elif "class" in prompt_lower:
-            return CodeType.CLASS
-        elif "component" in prompt_lower or "react" in prompt_lower:
-            return CodeType.COMPONENT
-        elif "api" in prompt_lower or "endpoint" in prompt_lower:
-            return CodeType.API
-        elif "test" in prompt_lower or "unit" in prompt_lower:
-            return CodeType.TEST
-        elif "refactor" in prompt_lower:
-            return CodeType.REFACTOR
-        elif "optimize" in prompt_lower or "performance" in prompt_lower:
-            return CodeType.OPTIMIZATION
-        
-        return CodeType.FUNCTION
+    # ========================================================================
+    # MIDDLEWARE CONFIGURATION
+    # ========================================================================
     
-    async def get_unified_status(self) -> Dict[str, Any]:
-        """[📊] Get status of all integrated systems"""
+    # CORS - Allow local development and specific origins
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=[
+            "http://localhost:3000",      # Frontend dev
+            "http://localhost:8000",      # API gateway
+            "http://127.0.0.1:3000",
+            "http://127.0.0.1:8000",
+            "http://localhost",           # Shell access
+        ],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+    
+    # ========================================================================
+    # ROUTE REGISTRATION
+    # ========================================================================
+    
+    # AI Intelligence Matrix Routes
+    if ai_router:
+        app.include_router(ai_router, prefix="/v1", tags=["AI"])
+        logger.info("✅ AI Matrix routes registered")
+    else:
+        logger.warning("⚠️  AI Matrix routes not available")
+    # XAI routes (model listing, ensemble scoring, explanations)
+    try:
+        if xai_router:
+            app.include_router(xai_router, prefix="/api/xai", tags=["XAI"])
+            logger.info("✅ XAI routes registered at /api/xai")
+        else:
+            logger.debug("XAI router not available; skipping registration")
+    except NameError:
+        logger.debug("XAI router not present; skipping registration")
+    
+    # ========================================================================
+    # MAIN HEALTH ENDPOINT
+    # ========================================================================
+    
+    @app.get("/health")
+    async def health_check():
+        """System health check endpoint"""
         return {
+            "status": "healthy",
+            "service": "NEXUS AI Intelligence Matrix v8.0",
+            "components": {
+                "ai_matrix": "active",
+                "api_gateway": "active",
+                "registry_system": "active" if registry_manager_instance else "inactive",
+                "service_mesh": "active",
+                "event_router": "active"
+            },
+            "version": "8.0.0"
+        }
+    
+    # ========================================================================
+    # REGISTRY ACCESS ENDPOINTS
+    # ========================================================================
+    
+    @app.get("/registries")
+    async def get_registries():
+        """Get list of available registries"""
+        if registry_manager_instance:
+            return {
+                "registries": list(registry_manager_instance.master_registry.sub_registries.keys()),
+                "status": "synced"
+            }
+        return {"error": "Registry system not available"}
+    
+    @app.get("/registries/{registry_name}.json")
+    async def get_registry(registry_name: str):
+        """Get specific registry data"""
+        if registry_manager_instance:
+            registry = registry_manager_instance.master_registry.sub_registries.get(registry_name)
+            if registry:
+                return registry.data
+        return {"error": f"Registry '{registry_name}' not found"}
+    
+    @app.get("/system/info")
+    async def system_info():
+        """Get system information"""
+        return {
+            "system": "NEXUS AI Intelligence Matrix v8.0",
             "status": "operational",
-            "emoji": "[✅]",
-            "systems": {
-                "chat": "active",
-                "codegen": "active",
-                "registry": "active",
-                "visual_systems": "active"
+            "components": {
+                "ai_matrix": {
+                    "providers": 6,
+                    "models": 25,
+                    "status": "active"
+                },
+                "api_gateway": {
+                    "services": 6,
+                    "status": "active"
+                },
+                "registry": {
+                    "sub_registries": 7,
+                    "status": "synced" if registry_manager_instance else "inactive"
+                }
             },
-            "timestamp": datetime.utcnow().isoformat(),
-            "features": {
-                "chat_modes": 10,
-                "code_languages": 10,
-                "model_providers": 6,
-                "intent_types": 10
+            "capabilities": [
+                "multi_provider_routing",
+                "intent_detection",
+                "multi_model_consensus",
+                "code_analysis",
+                "project_scoring",
+                "real_time_chat",
+                "service_mesh",
+                "event_routing",
+                "code_injection",
+                "metrics_tracking"
+            ]
+        }
+    
+    # ========================================================================
+    # DOCUMENTATION
+    # ========================================================================
+    
+    @app.get("/docs/quick-start")
+    async def quick_start():
+        """Quick start guide"""
+        return {
+            "title": "NEXUS AI Intelligence Matrix v8.0 - Quick Start",
+            "setup_steps": [
+                "1. Load Zsh modules: source ai_intelligence_matrix.zsh",
+                "2. Configure API keys: ai_add_key openai 'sk-...'",
+                "3. Test: ai 'hello'",
+                "4. Start backend: python -m uvicorn services.api_gateway.main:app"
+            ],
+            "basic_commands": [
+                "ai 'question'          - Ask AI",
+                "ai_consensus 'prompt'  - Multi-model consensus",
+                "ai_code file.py        - Code review",
+                "ai_explain 'topic'     - Explain topic",
+                "ai_todo 'context'      - Generate TODO list",
+                "ai_score /path         - Score project"
+            ],
+            "endpoints": [
+                "POST /v1/ai/route      - Intelligent routing",
+                "POST /v1/ai/consensus  - Multi-model consensus",
+                "POST /v1/ai/chat       - Chat interface",
+                "GET  /v1/ai/health     - System health"
+            ],
+            "providers": {
+                "openai": "gpt-5.1, gpt-4o, gpt-4-turbo",
+                "anthropic": "claude-3-7-opus, claude-3-7-sonnet",
+                "google": "gemini-3, gemini-2.0-pro",
+                "deepseek": "deepseek-v3, deepseek-r1",
+                "mistral": "mistral-large, mistral-medium",
+                "ollama": "llama3.1, mistral, codellama"
+            },
+            "documentation": {
+                "complete_guide": "/workspaces/zsh/services/AI_INTELLIGENCE_MATRIX_GUIDE.md",
+                "quick_reference": "/workspaces/zsh/QUICK_REFERENCE.md",
+                "deployment_status": "/workspaces/zsh/AI_INTELLIGENCE_MATRIX_DEPLOYMENT_STATUS.md"
             }
         }
+    
+    logger.info("✅ FastAPI application configured")
+    return app
 
+# ============================================================================
+# APPLICATION INSTANCE
+# ============================================================================
 
-class UnifiedDashboard:
-    """
-    [📊] UNIFIED DASHBOARD
-    Monitor all systems: Chat, CodeGen, Ultimate Copilot
-    
-    Features:
-    [📈] Real-time metrics and analytics
-    [🎨] Interactive 3D visualizations
-    [⚡] Performance monitoring
-    [🔒] Security & compliance tracking
-    [🎯] Intent & goal tracking
-    [💡] Insights & recommendations
-    """
-    
-    def __init__(self, bridge: ChatBoxCodeGenBridge):
-        """Initialize Unified Dashboard"""
-        self.bridge = bridge
-        self.metrics = {}
-        
-        logger.info("[📊] Unified Dashboard Initialized")
-    
-    async def get_real_time_metrics(self) -> Dict[str, Any]:
-        """[📈] Get real-time system metrics"""
-        return {
-            "type": "metrics",
-            "emoji": "[📈]",
-            "chat": {
-                "active_sessions": 12,
-                "messages_per_minute": 45,
-                "avg_response_time": "245ms",
-                "model_consensus": 0.89
-            },
-            "codegen": {
-                "active_generations": 3,
-                "avg_code_quality": 0.92,
-                "security_score": 0.95,
-                "coverage": 0.87
-            },
-            "copilot": {
-                "features_utilized": 125,
-                "ensemble_models": 7,
-                "avg_latency": "120ms",
-                "throughput": "1000 req/sec"
-            },
-            "timestamp": datetime.utcnow().isoformat()
-        }
-    
-    async def get_session_analytics(self, session_id: str) -> Dict[str, Any]:
-        """[📊] Get detailed session analytics"""
-        return {
-            "session_id": session_id,
-            "emoji": "[📊]",
-            "metrics": {
-                "total_messages": 0,
-                "code_generations": 0,
-                "intent_detection_accuracy": 0.95,
-                "user_satisfaction": 0.92
-            },
-            "timeline": [],
-            "recommendations": []
-        }
+app = create_app()
 
+# ============================================================================
+# STARTUP MESSAGE
+# ============================================================================
 
-class ChatBoxCodeGenDemo:
-    """[🎨] Demo - Full Integration"""
-    
-    @staticmethod
-    async def run():
-        """Run full integration demo"""
-        
-        # Import systems
-        from . import UnifiedChatInterface
-        from .codegen import CodeGenEngine
-        
-        logger.info("[🎨] Starting ChatBox ↔ CodeGen Integration Demo...")
-        
-        # Initialize systems
-        chat = UnifiedChatInterface()
-        codegen = CodeGenEngine(chat)
-        
-        # Create bridge
-        bridge = ChatBoxCodeGenBridge(chat, codegen, None)
-        await bridge.initialize()
-        
-        # Create session
-        session_id = await chat.create_session(
-            title="[✨] ChatBox + CodeGen Integration Demo",
-            mode="code_generation"
-        )
-        
-        # Process message with code generation
-        print("\n[🎯] Processing complex user request with automatic code generation...\n")
-        
-        async for event in bridge.process_chat_with_codegen(
-            session_id,
-            user_message="[⚙️] Create an async Python function that streams data from multiple sources with error handling, logging, and performance optimization",
-            enable_code_gen=True,
-            code_context={"language": "python", "framework": "asyncio"}
-        ):
-            event_type = event.get("type", "unknown")
-            emoji = event.get("emoji", "[💬]")
-            
-            if event_type in ["streaming", "reasoning_step"]:
-                # Skip verbose output for demo
-                pass
-            else:
-                print(f"{emoji} {event_type.upper()}")
-                
-                if "error" in event:
-                    print(f"   Error: {event['error']}")
-        
-        # Get dashboard metrics
-        dashboard = UnifiedDashboard(bridge)
-        metrics = await dashboard.get_real_time_metrics()
-        
-        print(f"\n[📊] REAL-TIME METRICS:")
-        print(f"   Chat Active Sessions: {metrics['chat']['active_sessions']}")
-        print(f"   CodeGen Active Generations: {metrics['codegen']['active_generations']}")
-        print(f"   Copilot Features Utilized: {metrics['copilot']['features_utilized']}")
-        
-        # Get system status
-        status = await bridge.get_unified_status()
-        print(f"\n[✅] SYSTEM STATUS: {status['status']}")
-        print(f"   Chat: {status['systems']['chat']}")
-        print(f"   CodeGen: {status['systems']['codegen']}")
-        print(f"   Registry: {status['systems']['registry']}")
+@app.on_event("startup")
+async def startup_message():
+    logger.info("=" * 70)
+    logger.info("🧠 NEXUS AI INTELLIGENCE MATRIX v8.0")
+    logger.info("=" * 70)
+    logger.info("✅ Multi-provider LLM orchestration platform")
+    logger.info("✅ 6 AI providers (OpenAI, Anthropic, Google, DeepSeek, Mistral, Ollama)")
+    logger.info("✅ Intelligent routing with intent detection")
+    logger.info("✅ Multi-model consensus for reliability")
+    logger.info("✅ Production-grade service mesh and event routing")
+    logger.info("✅ Zsh CLI integration for power users")
+    logger.info("=" * 70)
+    logger.info("📚 Documentation: /workspaces/zsh/services/AI_INTELLIGENCE_MATRIX_GUIDE.md")
+    logger.info("🚀 Quick Start: GET /docs/quick-start")
+    logger.info("=" * 70)
 
+# ============================================================================
+# EXPORT
+# ============================================================================
 
-# Integration entry point
-async def integrate_chatbox_codegen(registry=None):
-    """
-    [🔗] Integration Entry Point
-    Connect ChatBox + CodeGen + Ultimate Copilot
-    """
-    
-    logger.info("[🔗] Starting ChatBox ↔ CodeGen Integration...")
-    
-    # Import and initialize systems
-    from . import UnifiedChatInterface
-    from .codegen import CodeGenEngine
-    
-    chat = UnifiedChatInterface(registry)
-    codegen = CodeGenEngine(chat)
-    
-    # Create and return bridge
-    bridge = ChatBoxCodeGenBridge(chat, codegen, registry)
-    await bridge.initialize()
-    
-    logger.info("[✅] Integration Complete - ChatBox ↔ CodeGen ↔ Ultimate Copilot Connected")
-    
-    return bridge
+__all__ = ["app", "create_app"]
 
+# ============================================================================
+# CLI EXECUTION
+# ============================================================================
 
 if __name__ == "__main__":
-    asyncio.run(ChatBoxCodeGenDemo.run())
+    import uvicorn
+    
+    print("=" * 70)
+    print("🚀 Starting NEXUS AI Intelligence Matrix v8.0")
+    print("=" * 70)
+    print("📡 Server: http://localhost:8000")
+    print("📚 Docs:   http://localhost:8000/docs")
+    print("🎯 Health: http://localhost:8000/health")
+    print("=" * 70)
+    
+    uvicorn.run(
+        "integration:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=True,
+        log_level="info"
+    )

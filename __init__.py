@@ -1,21 +1,26 @@
 """
-Agents Sub-Registry for the Universal Hyper Registry.
-Provides registration, discovery, and lifecycle management for advanced agents
-and tools (VectorStore, Web Search, Neo4j KG, Git/Repo, Crawling/Parsing,
-DAG/RAG++, GraphRAG, Ensemble Fusion, Multimodal, Screen Capture, VLA/Playwright, XAI).
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    NEXUS AI STUDIO VISUAL ENGINE v3.0                      ║
+║                  🎨 3D Quantum Gradient Rendering System 🎨                 ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+Priority 0: Comprehensive visual framework with 3D ASCII art, quantum gradients,
+emoji-rich controls, animations, and real-time telemetry rendering.
 """
 
-AGENTS_REGISTRY = {}
-TOOLS_REGISTRY = {}
+from .theme_manager import ThemeManager
+from .animation_engine import AnimationEngine
+from .emoji_system import EmojiSystem
+from .gradient_renderer import GradientRenderer
+from .telemetry_sparklines import TelemetrySparklines
 
-def register_agent(name: str, agent_cls):
-    AGENTS_REGISTRY[name] = agent_cls
+__all__ = [
+    'ThemeManager',
+    'AnimationEngine',
+    'EmojiSystem',
+    'GradientRenderer',
+    'TelemetrySparklines',
+]
 
-def register_tool(name: str, tool_cls):
-    TOOLS_REGISTRY[name] = tool_cls
-
-def list_agents():
-    return sorted(AGENTS_REGISTRY.keys())
-
-def list_tools():
-    return sorted(TOOLS_REGISTRY.keys())
+__version__ = '3.0.0'
+__author__ = 'NEXUS AI Studio'

@@ -1,0 +1,304 @@
+{
+  "version": "1.0.0",
+  "description": "Dashboard Registry: Maps tools, providers, and metrics to UI components",
+  "registry_type": "dashboard",
+  "timestamp_created": "2025-01-17",
+  "sections": {
+    "tools": {
+      "description": "System tool detection and capabilities",
+      "entries": {
+        "docker": {
+          "display_name": "Docker / Podman",
+          "category": "container",
+          "ui_component": "capability_badge",
+          "icon": "🐳",
+          "env_var": "NEXUS_HAS_DOCKER",
+          "status_indicator": true,
+          "dependency": ["container_runtime"]
+        },
+        "kubernetes": {
+          "display_name": "Kubernetes Cluster",
+          "category": "orchestration",
+          "ui_component": "cluster_status_card",
+          "icon": "☸️",
+          "env_var": "NEXUS_HAS_KUBERNETES",
+          "secondary_env": "NEXUS_K8S_CONTEXT",
+          "status_indicator": true,
+          "metrics": ["pod_count", "node_count", "memory_usage"]
+        },
+        "gpu": {
+          "display_name": "GPU Acceleration",
+          "category": "compute",
+          "ui_component": "gauge_meter",
+          "icon": "🚀",
+          "env_vars": [
+            "NEXUS_HAS_GPU",
+            "NEXUS_GPU_TYPE",
+            "NEXUS_GPU_COUNT"
+          ],
+          "metrics": ["gpu_memory_percent", "gpu_utilization", "temperature"],
+          "status_indicator": true
+        },
+        "pytorch": {
+          "display_name": "PyTorch Framework",
+          "category": "ml_framework",
+          "ui_component": "capability_badge",
+          "icon": "🔥",
+          "env_var": "NEXUS_HAS_PYTORCH",
+          "status_indicator": true,
+          "linked_provider": "ollama"
+        },
+        "tensorflow": {
+          "display_name": "TensorFlow / Keras",
+          "category": "ml_framework",
+          "ui_component": "capability_badge",
+          "icon": "📊",
+          "env_var": "NEXUS_HAS_TENSORFLOW",
+          "status_indicator": true,
+          "linked_provider": "ollama"
+        },
+        "transformers": {
+          "display_name": "HuggingFace Transformers",
+          "category": "ml_framework",
+          "ui_component": "capability_badge",
+          "icon": "🤗",
+          "env_var": "NEXUS_HAS_TRANSFORMERS",
+          "status_indicator": true,
+          "linked_provider": "ollama"
+        },
+        "git": {
+          "display_name": "Git Version Control",
+          "category": "vcs",
+          "ui_component": "capability_badge",
+          "icon": "📦",
+          "env_var": "NEXUS_PYTHON_VERSION",
+          "status_indicator": false
+        },
+        "nodejs": {
+          "display_name": "Node.js Runtime",
+          "category": "runtime",
+          "ui_component": "capability_badge",
+          "icon": "⚙️",
+          "env_var": "NEXUS_HAS_NODEJS",
+          "status_indicator": true
+        },
+        "aws_cli": {
+          "display_name": "AWS CLI",
+          "category": "cloud",
+          "ui_component": "capability_badge",
+          "icon": "☁️",
+          "env_var": "NEXUS_HAS_AWS",
+          "status_indicator": true
+        },
+        "gcloud": {
+          "display_name": "Google Cloud CLI",
+          "category": "cloud",
+          "ui_component": "capability_badge",
+          "icon": "☁️",
+          "env_var": "NEXUS_HAS_GCLOUD",
+          "status_indicator": true
+        },
+        "azure_cli": {
+          "display_name": "Azure CLI",
+          "category": "cloud",
+          "ui_component": "capability_badge",
+          "icon": "☁️",
+          "env_var": "NEXUS_HAS_AZURE",
+          "status_indicator": true
+        },
+        "terraform": {
+          "display_name": "Terraform IaC",
+          "category": "iac",
+          "ui_component": "capability_badge",
+          "icon": "🏗️",
+          "env_var": "NEXUS_HAS_TERRAFORM",
+          "status_indicator": true
+        },
+        "ansible": {
+          "display_name": "Ansible Orchestration",
+          "category": "iac",
+          "ui_component": "capability_badge",
+          "icon": "🤖",
+          "env_var": "NEXUS_HAS_ANSIBLE",
+          "status_indicator": true
+        }
+      }
+    },
+    "providers": {
+      "description": "LLM provider endpoints and status",
+      "entries": {
+        "openai": {
+          "display_name": "OpenAI GPT",
+          "icon": "🔵",
+          "ui_component": "provider_card",
+          "status_endpoint": "/health/openai",
+          "models_display": ["gpt-4o", "gpt-4-turbo", "gpt-3.5-turbo"],
+          "capabilities": ["streaming", "vision", "function_calling"],
+          "metrics": ["request_count", "error_rate", "avg_latency_ms"],
+          "health_check": true
+        },
+        "anthropic": {
+          "display_name": "Anthropic Claude",
+          "icon": "🧠",
+          "ui_component": "provider_card",
+          "status_endpoint": "/health/anthropic",
+          "models_display": ["claude-3-opus", "claude-3-sonnet", "claude-3-haiku"],
+          "capabilities": ["reasoning", "long_context", "code_generation"],
+          "metrics": ["request_count", "error_rate", "avg_latency_ms"],
+          "health_check": true
+        },
+        "google": {
+          "display_name": "Google Gemini",
+          "icon": "🔍",
+          "ui_component": "provider_card",
+          "status_endpoint": "/health/google",
+          "models_display": ["gemini-1.5-pro", "gemini-1.5-flash"],
+          "capabilities": ["streaming", "vision", "audio"],
+          "metrics": ["request_count", "error_rate", "avg_latency_ms"],
+          "health_check": true
+        },
+        "deepseek": {
+          "display_name": "DeepSeek",
+          "icon": "🚀",
+          "ui_component": "provider_card",
+          "status_endpoint": "/health/deepseek",
+          "models_display": ["deepseek-chat", "deepseek-coder"],
+          "capabilities": ["code_generation", "fast"],
+          "metrics": ["request_count", "error_rate", "avg_latency_ms"],
+          "health_check": true
+        },
+        "mistral": {
+          "display_name": "Mistral AI",
+          "icon": "✨",
+          "ui_component": "provider_card",
+          "status_endpoint": "/health/mistral",
+          "models_display": ["mistral-large", "mistral-medium"],
+          "capabilities": ["fast", "code_generation"],
+          "metrics": ["request_count", "error_rate", "avg_latency_ms"],
+          "health_check": true
+        },
+        "ollama": {
+          "display_name": "Ollama Local",
+          "icon": "🦙",
+          "ui_component": "provider_card",
+          "status_endpoint": "/health/ollama",
+          "models_display": ["llama2", "mistral"],
+          "capabilities": ["streaming", "local"],
+          "metrics": ["request_count", "error_rate", "avg_latency_ms"],
+          "health_check": true,
+          "location": "local"
+        }
+      }
+    },
+    "metrics": {
+      "description": "Real-time system and orchestrator metrics",
+      "system": {
+        "cpu_usage": {
+          "display_name": "CPU Usage",
+          "unit": "%",
+          "ui_component": "sparkline_chart",
+          "icon": "📈",
+          "range": [0, 100],
+          "threshold_warning": 75,
+          "threshold_critical": 90
+        },
+        "memory_usage": {
+          "display_name": "Memory Usage",
+          "unit": "GB",
+          "ui_component": "gauge_meter",
+          "icon": "💾",
+          "threshold_warning": 0.75,
+          "threshold_critical": 0.9
+        },
+        "disk_usage": {
+          "display_name": "Disk Usage",
+          "unit": "%",
+          "ui_component": "gauge_meter",
+          "icon": "💿",
+          "range": [0, 100],
+          "threshold_warning": 80,
+          "threshold_critical": 95
+        },
+        "network_in_mbps": {
+          "display_name": "Network In",
+          "unit": "Mbps",
+          "ui_component": "line_chart",
+          "icon": "📥"
+        },
+        "network_out_mbps": {
+          "display_name": "Network Out",
+          "unit": "Mbps",
+          "ui_component": "line_chart",
+          "icon": "📤"
+        }
+      },
+      "orchestrator": {
+        "aefa_confidence_score": {
+          "display_name": "AEFA Confidence",
+          "unit": "%",
+          "ui_component": "gauge_meter",
+          "icon": "🎯",
+          "range": [0, 100]
+        },
+        "ensemble_entropy": {
+          "display_name": "Response Entropy",
+          "unit": "bits",
+          "ui_component": "gauge_meter",
+          "icon": "🔀"
+        },
+        "provider_agreement": {
+          "display_name": "Provider Agreement",
+          "unit": "%",
+          "ui_component": "gauge_meter",
+          "icon": "🤝",
+          "range": [0, 100]
+        },
+        "active_providers_count": {
+          "display_name": "Active Providers",
+          "unit": "count",
+          "ui_component": "number_badge",
+          "icon": "🔢"
+        }
+      }
+    },
+    "dashboard_layout": {
+      "primary_grid": [
+        {
+          "row": 1,
+          "cols": 2,
+          "component": "system_metrics_row",
+          "elements": ["cpu_usage", "memory_usage", "disk_usage"]
+        },
+        {
+          "row": 2,
+          "cols": 2,
+          "component": "tools_capability_row",
+          "elements": [
+            "docker",
+            "kubernetes",
+            "gpu",
+            "pytorch",
+            "tensorflow",
+            "transformers"
+          ]
+        },
+        {
+          "row": 3,
+          "cols": 3,
+          "component": "provider_status_row",
+          "elements": ["openai", "anthropic", "google", "deepseek", "mistral", "ollama"]
+        },
+        {
+          "row": 4,
+          "cols": 1,
+          "component": "orchestrator_metrics_row",
+          "elements": [
+            "aefa_confidence_score",
+            "ensemble_entropy",
+            "provider_agreement"
+          ]
+        }
+      ]
+    }
+  }
+}
