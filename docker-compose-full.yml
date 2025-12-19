@@ -1,0 +1,71 @@
+version: '3.9'
+
+services:
+  # PostgreSQL Database with pgvector
+  postgres:
+    image: pgvector/pgvector:pg16-latest
+    container_name: hyper_registry_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: hyper_registry
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - hyper_network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: hyper_registry_cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - hyper_network
+
+  # Hyper Registry API
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hyper_registry_api
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@postgres:5432/hyper_registry
+      REDIS_URL: redis://redis:6379
+      HOST: 0.0.0.0
+      PORT: 8000
+      WORKERS: 4
+      LOG_LEVEL: INFO
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app
+    networks:
+      - hyper_network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  hyper_network:
+    driver: bridge
